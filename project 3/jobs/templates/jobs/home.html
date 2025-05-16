@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block title %}JobFinder Pro - Find Your Dream Job{% endblock %}
+
+{% block content %}
+<section class="bg-gradient-to-r from-blue-800 to-blue-900 text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 fade-in">Find Your Dream Job in India</h1>
+        <p class="text-xl text-blue-200 mb-10 max-w-3xl mx-auto slide-in">Discover thousands of job opportunities and generate personalized cold emails to stand out from the crowd.</p>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto slide-in">
+            <form action="{% url 'jobs:job_list' %}" method="GET" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="designation" class="text-black block text-gray-700 font-medium mb-2">Designation</label>
+                        <input type="text" id="designation" name="designation" placeholder="e.g., Software Engineer" 
+                               value="{{ designation }}"
+                               class="text-black w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none">
+                    </div>
+                    
+                    <div>
+                        <label for="city" class="block text-gray-700 font-medium mb-2">City</label>
+                        <select id="city" name="city" class="text-gray-700 font-medium black w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none">
+                            <option value="">All Cities</option>
+                            {% for city in cities %}
+                            <option value="{{ city }}" {% if city == selected_city %}selected{% endif %}>{{ city }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="date" class="block text-gray-700 font-medium mb-2">Posted After</label>
+                        <input type="date" id="date" name="date" value="{{ date|default:today }}" max="{{ today }}"
+                               class="text-gray-700 font-medium black w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none">
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold text-lg shadow-md hover:shadow-lg transition-colors">
+                        Find Jobs
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 container mx-auto px-4">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">How JobFinder Pro Works</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Our platform helps you find the perfect job and stand out with personalized cold emails.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-lg shadow-md p-6 text-center card-hover">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Search Jobs</h3>
+            <p class="text-gray-600">Filter jobs by designation, city, and posting date to find the perfect match for your skills.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-6 text-center card-hover">
+            <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-teal-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Generate Cold Emails</h3>
+            <p class="text-gray-600">Create personalized cold emails tailored to each job posting with just one click.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-6 text-center card-hover">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Apply with Confidence</h3>
+            <p class="text-gray-600">Send your application with a professionally crafted email that highlights your relevant skills.</p>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Featured Job Categories</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Explore jobs across various industries and functions throughout India.</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <a href="{% url 'jobs:job_list' %}?designation=Software Engineer" class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold">Software</h3>
+                <p class="text-gray-500 text-sm">1000+ jobs</p>
+            </a>
+            
+            <a href="{% url 'jobs:job_list' %}?designation=Data Scientist" class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300">
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold">Data Science</h3>
+                <p class="text-gray-500 text-sm">500+ jobs</p>
+            </a>
+            
+            <a href="{% url 'jobs:job_list' %}?designation=Product Manager" class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold">Product</h3>
+                <p class="text-gray-500 text-sm">350+ jobs</p>
+            </a>
+            
+            <a href="{% url 'jobs:job_list' %}?designation=UX Designer" class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300">
+                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold">Design</h3>
+                <p class="text-gray-500 text-sm">250+ jobs</p>
+            </a>
+        </div>
+        
+        <div class="text-center mt-10">
+            <a href="{% url 'jobs:job_list' %}" class="btn-secondary px-8 py-3 rounded-lg font-semibold inline-block">
+                Explore All Categories
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 container mx-auto px-4">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Why Choose JobFinder Pro</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Our platform provides unique advantages to help you land your dream job.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-lg shadow-md p-8 card-hover">
+            <div class="flex items-start mb-4">
+                <div class="bg-blue-100 rounded-full p-3 mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">AI-Powered Cold Emails</h3>
+                    <p class="text-gray-600">Our platform generates personalized cold emails tailored to each job posting, highlighting your relevant skills and experiences.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-8 card-hover">
+            <div class="flex items-start mb-4">
+                <div class="bg-teal-100 rounded-full p-3 mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-teal-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Job-Specific Filters</h3>
+                    <p class="text-gray-600">Search for jobs based on your preferred designation, city in India, and posting date to find the most relevant opportunities.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-8 card-hover">
+            <div class="flex items-start mb-4">
+                <div class="bg-purple-100 rounded-full p-3 mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Real-Time Updates</h3>
+                    <p class="text-gray-600">Get access to the latest job listings from top companies in India, updated in real-time with the most current opportunities.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-8 card-hover">
+            <div class="flex items-start mb-4">
+                <div class="bg-orange-100 rounded-full p-3 mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Detailed Job Information</h3>
+                    <p class="text-gray-600">Access comprehensive job details including requirements, responsibilities, and company information to make informed decisions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block extra_js %}
+<script>
+    // City search functionality
+    const citySelect = document.getElementById('city');
+    
+    // This would be enhanced with a proper AJAX search in a real application
+    citySelect.addEventListener('focus', function() {
+        // Would fetch cities via AJAX based on input in a real implementation
+        console.log('City dropdown focused');
+    });
+</script>
+{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Job Search Results</h1>
+
+    {% if jobs %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for job in jobs %}
+            <!-- remove specail charcter from job id  -->
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    {% if job.employer_logo %}
+                        <img src="{{ job.employer_logo }}" alt="{{ job.employer_name }} logo" class="h-12 mb-4">
+                    {% endif %}
+                    
+                    <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ job.job_title }}</h2>
+                    <p class="text-gray-600 mb-2">{{ job.employer_name }}</p>
+                    <p class="text-gray-500 mb-2">{{ job.job_location }}</p>
+                    <p class="text-sm text-gray-500 mb-4">Posted: {{ job.job_posted_at }}</p>
+                    
+                    <div class="space-y-2 mb-4">
+                        {% if job.job_description %}
+                            <p class="text-gray-700 line-clamp-3">{{ job.job_description }}</p>
+                        {% endif %}
+                        
+                        {% if job.job_highlights %}
+                            <div class="mt-3">
+                                <h3 class="font-semibold text-gray-700 mb-2">Highlights:</h3>
+                                <ul class="list-disc list-inside text-gray-600">
+                                    {% for highlight in job.job_highlights %}
+                                        <li>{{ highlight }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <a href="{{ job.job_apply_link }}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                            Apply Now
+                        </a>
+                        <button 
+                            onclick="generateColdMail('{{ job.job_id }}')"
+                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors">
+                            Generate Cold Mail
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-8">
+            <p class="text-gray-600">No jobs found matching your criteria.</p>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function generateColdMail(jobId) {
+    window.location.href = `/jobs/${jobId}/generate-cold-mail/`;
+}
+</script>
+{% endblock %}
+
