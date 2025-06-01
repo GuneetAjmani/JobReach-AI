@@ -13,6 +13,7 @@ def home(request):
     """Home page with job search filters"""
     # Get initial set of cities for dropdown
     cities = [
+        
         'Bangalore', 'Mumbai', 'Delhi', 'Hyderabad', 
         'Chennai', 'Pune', 'Kolkata', 'Ahmedabad'
     ]
@@ -100,7 +101,7 @@ def job_list(request):
             'date': date
         }
         return render(request, 'jobs/home.html', context)
-
+    
 @api_view(['GET'])
 def search_jobs(request):
     try:
@@ -133,6 +134,7 @@ def search_jobs(request):
             {'error': 'Failed to fetch jobs'},
             status=500
         )
+
 
 def generate_cold_mail(request, job_id):
     try:
